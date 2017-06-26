@@ -2,7 +2,7 @@ module-name:
     kb_paperblast
 
 module-description:
-    A KBase module
+    Wrapper for PaperBLAST
 
 service-language:
     perl
