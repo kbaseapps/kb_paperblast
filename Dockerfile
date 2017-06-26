@@ -16,14 +16,19 @@ RUN mkdir -p /kb/module/dependencies/
 
 WORKDIR /kb/module/dependencies/
 RUN git clone https://github.com/morgannprice/PaperBLAST
+RUN mkdir PaperBLAST/bin/blast/
 RUN curl -L ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy/2.2.26/blast-2.2.26-x64-linux.tar.gz -o blast-2.2.26-x64-linux.tar.gz && \
     tar xzvf blast-2.2.26-x64-linux.tar.gz && \
-    mv blast-2.2.26/bin/* PaperBLAST/bin
+    mv blast-2.2.26/bin/* PaperBLAST/bin/blast/
 RUN rm -rf blast-2.2.26 blast-2.2.26-x64-linux.tar.gz
 
 WORKDIR /kb/module/dependencies/
+RUN mkdir PaperBLAST/data/
 RUN curl -L https://ndownloader.figshare.com/files/8029148 -o PaperBLAST_Apr2017.tar.gz && \
-    tar xzvf PaperBLAST_Apr2017.tar.gz
+    tar xzvf PaperBLAST_Apr2017.tar.gz && \
+    mv PaperBLAST_Apr2017/* PaperBLAST/data/
+RUN rm -rf PaperBLAST_Apr2017*
+
 
 # download an inifile reader
 RUN cpanm -i Config::IniFiles
