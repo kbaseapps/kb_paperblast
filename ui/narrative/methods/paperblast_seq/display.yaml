@@ -1,0 +1,43 @@
+#
+# define display information
+#
+name: PaperBLAST sequence
+
+tooltip: |
+    Find papers related to a protein sequence with PaperBLAST
+
+screenshots: []
+
+icon: paperblast-cyan.png
+
+#
+# define a set of similar methods that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            []
+        next:
+            []
+    methods:
+        related:
+            []
+        next:
+            []
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    sequence :
+        ui-name : |
+            Protein sequence
+        short-hint : |
+            Protein sequence to use as input to PaperBLAST
+        long-hint  : |
+            Protein sequence to use as input to PaperBLAST
+
+description : |
+    <p>This is a Narrative method for running <a href="http://papers.genomics.lbl.gov/">PaperBLAST</a>.
+
+    <p>PaperBLAST is software that finds open access publications that may be relative to a gene of interest, based on sequence similarity between between your gene of interest and a gene described in the publication.</p>
