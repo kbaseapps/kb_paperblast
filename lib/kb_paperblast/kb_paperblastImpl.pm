@@ -5,7 +5,7 @@ use Bio::KBase::Exceptions;
 # http://semver.org 
 our $VERSION = '0.0.1';
 our $GIT_URL = 'git@github.com:kbaseapps/kb_paperblast.git';
-our $GIT_COMMIT_HASH = '02fe5ea0c2c99d38111b24969d37d9882b228732';
+our $GIT_COMMIT_HASH = 'de02d624ae80a87346f85e109e854d885d324343';
 
 =head1 NAME
 
@@ -18,6 +18,8 @@ This KBase module is a wrapper for PaperBLAST
 =cut
 
 #BEGIN_HEADER
+use Bio::KBase::AuthToken;
+use KBaseReport::KBaseReportClient;
 #END_HEADER
 
 sub new
@@ -27,6 +29,7 @@ sub new
     };
     bless $self, $class;
     #BEGIN_CONSTRUCTOR
+    my $callbackURL = $ENV{ SDK_CALLBACK_URL };
     #END_CONSTRUCTOR
 
     if ($self->can('_init_instance'))
@@ -104,17 +107,36 @@ sub paperblast_seq
     my $ctx = $kb_paperblast::kb_paperblastServer::CallContext;
     my($output);
     #BEGIN paperblast_seq
+    my $token=$ctx->token;
+    my $provenance=$ctx->provenance;
 
     # only input is AA sequence:
     if (!exists $params->{'sequence'}) {
         die "Parameter 'sequence' is not set in input arguments";
     }
-    my $sequence = $params->{'sequence'};
+    my $sequence = uc($params->{'sequence'});
 
     # sanitize sequence
+    $sequence =~ s/[^A-Z]//g;
 
     # load output into variable
-    my $htmlOutput = `dependencies/PaperBLAST/cgi/litSearch.cgi "query=>sequence%0D%0$sequence&Search=Search"`
+    chdir "/kb/module/dependencies/PaperBLAST/cgi/";
+    my $htmlOutput = `./litSearch.cgi "query=>sequence%0D%0$sequence&Search=Search"`;
+
+    # make report
+    my $reportClient=KBaseReport::KBaseReportClient->new($self->{'callbackURL'},token=>$token);
+    my $reportInfo = $reportClient->create_extended_report({ message => "",
+							     objects_created => [],
+							     warnings => [],
+							     html_links => [],
+							     direct_html => $htmlOutput,
+							     direct_html_link_index => undef,
+							     file_links => [],
+							     report_object_name => undef,
+							     workspace_name => $params->{'ws'} });
+
+    $output = { report_ref => $reportInfo->{'ref'},
+		report_name => $reportInfo->{'name'} };
 
     #END paperblast_seq
     my @_bad_returns;

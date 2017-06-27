@@ -42,6 +42,15 @@ eval {
     # Check returned data with
     # ok(ret->{...} eq <expected>, "tested item") or other Test::More methods
 
+    my $params = {
+	ws => get_ws_name(),
+	sequence => "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    };
+
+    my $rv = $impl->paperblast_seq($params);
+    print ("paperblast_seq test\n");
+    print Dumper($rv);
+
 };
 my $err = undef;
 if ($@) {

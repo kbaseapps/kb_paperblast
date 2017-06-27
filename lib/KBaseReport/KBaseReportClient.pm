@@ -1,4 +1,4 @@
-package kbasereport::kbasereportClient;
+package KBaseReport::KBaseReportClient;
 
 use JSON::RPC::Client;
 use POSIX;
@@ -22,7 +22,7 @@ our $VERSION = "0.1.0";
 
 =head1 NAME
 
-kbasereport::kbasereportClient
+KBaseReport::KBaseReportClient
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ sub new
     
 
     my $self = {
-	client => kbasereport::kbasereportClient::RpcClient->new,
+	client => KBaseReport::KBaseReportClient::RpcClient->new,
 	url => $url,
 	headers => [],
     };
@@ -55,7 +55,7 @@ sub new
     if (exists $arg_hash{"async_job_check_max_time_ms"}) {
         $self->{async_job_check_max_time} = $arg_hash{"async_job_check_max_time_ms"} / 1000.0;
     }
-    my $service_version = 'release';
+    my $service_version = 'dev';
     if (exists $arg_hash{"service_version"}) {
         $service_version = $arg_hash{"service_version"};
     }
@@ -553,10 +553,10 @@ sub _validate_version {
         );
     }
     if ($sMinor > $cMinor) {
-        warn "New client version available for kbasereport::kbasereportClient\n";
+        warn "New client version available for KBaseReport::KBaseReportClient\n";
     }
     if ($sMajor == 0) {
-        warn "kbasereport::kbasereportClient version is $svr_version. API subject to change.\n";
+        warn "KBaseReport::KBaseReportClient version is $svr_version. API subject to change.\n";
     }
 }
 
@@ -961,7 +961,7 @@ workspace_name has a value which is a string
 
 =cut
 
-package kbasereport::kbasereportClient::RpcClient;
+package KBaseReport::KBaseReportClient::RpcClient;
 use base 'JSON::RPC::Client';
 use POSIX;
 use strict;
