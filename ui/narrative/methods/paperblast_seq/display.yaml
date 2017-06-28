@@ -33,9 +33,9 @@ parameters :
         ui-name : |
             Protein sequence
         short-hint : |
-            Protein sequence to use as input to PaperBLAST
+            Protein sequence to use as input to PaperBLAST; no headers.
         long-hint  : |
-            Protein sequence to use as input to PaperBLAST
+            Protein sequence to use as input to PaperBLAST; no headers.  Non-amino acid characters will be ignored.
 
 description : |
     <p>This is a Narrative method for running <a href="http://papers.genomics.lbl.gov/">PaperBLAST</a>.
