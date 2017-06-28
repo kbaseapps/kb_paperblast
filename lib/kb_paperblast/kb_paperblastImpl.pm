@@ -121,7 +121,8 @@ sub paperblast_seq
 
     # load output into variable
     chdir "/kb/module/dependencies/PaperBLAST/cgi/";
-    my $command = './litSearch.cgi "query=>sequence%0D%0'.$sequence.'&Search=Search"';
+    my $command = './litSearch.cgi "query=>sequence%0D'.$sequence.'&Search=Search"';
+    print("Command is: $command\n");
     my $htmlOutput = `$command`;
 
     # make report
