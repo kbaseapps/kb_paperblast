@@ -117,10 +117,12 @@ sub paperblast_seq
 
     # sanitize sequence
     $sequence =~ s/[^A-Z]//g;
+    print("Cleaned up sequence is: $sequence\n");
 
     # load output into variable
     chdir "/kb/module/dependencies/PaperBLAST/cgi/";
-    my $htmlOutput = `./litSearch.cgi "query=>sequence%0D%0$sequence&Search=Search"`;
+    my $command = './litSearch.cgi "query=>sequence%0D%0'.$sequence.'&Search=Search"';
+    my $htmlOutput = `$command`;
 
     # make report
     require "KBaseReport/KBaseReportClient.pm";
