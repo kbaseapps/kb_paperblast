@@ -29,7 +29,6 @@ sub new
     };
     bless $self, $class;
     #BEGIN_CONSTRUCTOR
-    my $callbackURL = $ENV{ SDK_CALLBACK_URL };
     #END_CONSTRUCTOR
 
     if ($self->can('_init_instance'))
@@ -124,7 +123,9 @@ sub paperblast_seq
     my $htmlOutput = `./litSearch.cgi "query=>sequence%0D%0$sequence&Search=Search"`;
 
     # make report
-    my $reportClient=KBaseReport::KBaseReportClient->new($self->{'callbackURL'},token=>$token);
+    require "KBaseReport/KBaseReportClient.pm";
+    print ("callback url is ".$ENV{ SDK_CALLBACK_URL }."\n");
+    my $reportClient = new KBaseReport::KBaseReportClient($ENV{ SDK_CALLBACK_URL },token=>$token);
     my $reportInfo = $reportClient->create_extended_report({ message => "",
 							     objects_created => [],
 							     warnings => [],
@@ -132,7 +133,7 @@ sub paperblast_seq
 							     direct_html => $htmlOutput,
 							     direct_html_link_index => undef,
 							     file_links => [],
-							     report_object_name => undef,
+							     report_object_name => "test",
 							     workspace_name => $params->{'ws'} });
 
     $output = { report_ref => $reportInfo->{'ref'},
