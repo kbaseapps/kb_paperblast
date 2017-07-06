@@ -43,14 +43,23 @@ eval {
     # ok(ret->{...} eq <expected>, "tested item") or other Test::More methods
 
     my $params = {
-	ws => get_ws_name(),
-	sequence => "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	'ws' => get_ws_name(),
+	'sequence' => "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     };
 
     my $rv = $impl->paperblast_seq($params);
     print ("paperblast_seq test\n");
     print Dumper($rv);
 
+    $params->{'sequence'} = "";
+    $rv = $impl->paperblast_seq($params);
+    print ("paperblast_seq test no sequence\n");
+    print Dumper($rv);
+
+    $params->{'sequence'} = "x";
+    $rv = $impl->paperblast_seq($params);
+    print ("paperblast_seq test x\n");
+    print Dumper($rv);
 };
 my $err = undef;
 if ($@) {
