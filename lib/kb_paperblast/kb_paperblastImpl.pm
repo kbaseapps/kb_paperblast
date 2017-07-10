@@ -130,19 +130,19 @@ sub paperblast_seq
     # find any warnings or errors
     my @warnings = [];
     if ($htmlOutput =~ /<ERROR>(.*?)<\/ERROR>/) {
-	# print("ERROR: $1\n");
+	print("ERROR: $1\n");
 	die $1;
     }
     if ($htmlOutput =~ /<h1>Software error:<\/h1>.*?<pre>(.*?)<\/pre>/ms) {
-	# print("ERROR: $1\n");
+	print("ERROR: $1\n");
 	die $1;
     }
     if ($htmlOutput =~ /<font color='red'>(.*?)<\/font>/) {
-	# print("WARNING: $1\n");
+	print("WARNING: $1\n");
 	push @warnings, $1;
     }
     if ($htmlOutput =~ /<p>(Sorry, .*?)<\/p>/) {
-	# print("WARNING: $1\n");
+	print("WARNING: $1\n");
 	push @warnings, $1;
     }
 
