@@ -124,19 +124,25 @@ sub paperblast_seq
     my $command = './litSearch.cgi "query='.$sequence.'"';
     print("Command is: $command\n");
     my $htmlOutput = `$command`;
+    
+    # print("Output: $htmlOutput\n");
 
     # find any warnings or errors
     my @warnings = [];
     if ($htmlOutput =~ /<ERROR>(.*?)<\/ERROR>/) {
+	# print("ERROR: $1\n");
 	die $1;
     }
-    if ($htmlOutput =~ /<h1>Software error:<\/h1>\n<pre>(.*?)<\/pre>/) {
+    if ($htmlOutput =~ /<h1>Software error:<\/h1>.*?<pre>(.*?)<\/pre>/ms) {
+	# print("ERROR: $1\n");
 	die $1;
     }
     if ($htmlOutput =~ /<font color='red'>(.*?)<\/font>/) {
+	# print("WARNING: $1\n");
 	push @warnings, $1;
     }
     if ($htmlOutput =~ /<p>(Sorry, .*?)<\/p>/) {
+	# print("WARNING: $1\n");
 	push @warnings, $1;
     }
 
