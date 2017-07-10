@@ -121,41 +121,27 @@ sub paperblast_seq
 
     # load output into variable
     chdir "/kb/module/dependencies/PaperBLAST/cgi/";
-    my $command = './litSearch.cgi "query=\'>sequence\\\\\n'.$sequence.'\'&Search=Search"';
+    my $command = './litSearch.cgi "query='.$sequence.'"';
     print("Command is: $command\n");
     my $htmlOutput = `$command`;
 
-    print ("output1 is $htmlOutput\n");
-
     # find any warnings or errors
     my @warnings = [];
-    if ($htmlOutput =~ /<p>Sorry, query has a FASTA header but no sequence<\/p>/) {
-	die "Sorry, query has a FASTA header but no sequence";
+    if ($htmlOutput =~ /<ERROR>(.*?)<\/ERROR>/) {
+	die $1;
     }
-    if ($htmlOutput =~ /<h1>Software error:<\/h1>\\n<pre>(.*)?\\n<\/pre>/ms) {
-	die "Software error: $1\n";
+    if ($htmlOutput =~ /<h1>Software error:<\/h1>\n<pre>(.*?)<\/pre>/) {
+	die $1;
     }
-    if ($htmlOutput =~ /Sorry, no hits to proteins in the literature./) {
-	push @warnings, "Sorry, no hits to proteins in the literature.";
+    if ($htmlOutput =~ /<font color='red'>(.*?)<\/font>/) {
+	push @warnings, $1;
+    }
+    if ($htmlOutput =~ /<p>(Sorry, .*?)<\/p>/) {
+	push @warnings, $1;
     }
 
-    # strip fitblast info
-    $htmlOutput =~ s/<H3><A title="Fitness.*?<\/H3>//mgs;
-    $htmlOutput =~ s/<script.*?<\/script>//mgs;
-    $htmlOutput =~ s/<P><DIV ID="fitblast_short"><\/DIV><\/P>//;
-
-    # strip bad links from output
-    $htmlOutput =~ s/<a href="showAlign.cgi.*?title="(.*?)">(.*?)<\/a>/<span title="$1">$2<\/span>/mgs;
-    $htmlOutput =~ s/<a title="(.*?)" href="showAlign.cgi.*?>(.*?)<\/a>/<span title="$1">$2<\/span>/mgs;
-    $htmlOutput =~ s/For help.*?error//ms;
-    $htmlOutput =~ s/<h3><a href="litSearch.cgi">New Search<\/a><\/h3>//mgs;
-    $htmlOutput =~ s/<a href="litSearch.cgi" (.*?)<\/a>/<span $1<\/span>/mgsi;
-
-    # strip html header at beginning, and help at end (moved to app help)
-    $htmlOutput =~ s/^.*<body>//ms;
-    $htmlOutput =~ s/<h3>Query Sequence<\/h3>.*//ms;
-
-    print ("output2 is $htmlOutput\n");
+    # strip HTML header from output
+    $htmlOutput =~ s/.*<body>//m;
 
     # make report
     require "KBaseReport/KBaseReportClient.pm";
