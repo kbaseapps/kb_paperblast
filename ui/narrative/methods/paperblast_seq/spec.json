@@ -1,9 +1,9 @@
 {
-    "ver": "0.0.1",
+    "ver": "0.0.3",
     "authors": [
         "jmc"
     ],
-    "contact": "",
+    "contact": "http://kbase.us/contact-us/",
     "categories": ["active","sequence"],
     "widgets": {
         "input": null,

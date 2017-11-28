@@ -3,8 +3,8 @@ use strict;
 use Bio::KBase::Exceptions;
 # Use Semantic Versioning (2.0.0-rc.1)
 # http://semver.org 
-our $VERSION = '0.0.1';
-our $GIT_URL = 'git@github.com:kbaseapps/kb_paperblast.git';
+our $VERSION = '0.0.3';
+our $GIT_URL = 'https://github.com/kbaseapps/kb_paperblast';
 our $GIT_COMMIT_HASH = 'de02d624ae80a87346f85e109e854d885d324343';
 
 =head1 NAME
