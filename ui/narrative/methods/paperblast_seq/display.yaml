@@ -1,7 +1,7 @@
 #
 # define display information
 #
-name: PaperBLAST sequence - v2017.04
+name: PaperBLAST sequence - v2017-04-10
 
 tooltip: |
     Find papers related to a protein sequence with PaperBLAST
