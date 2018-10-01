@@ -61,7 +61,7 @@ description : |
     PaperBLAST uses <A
     HREF="https://en.wikipedia.org/wiki/BLAST">protein-protein BLAST</A>
     to find similar sequences with E &lt; 0.001.
-    
+
     <P>To build the database, we query EuropePMC with locus tags, with <A
     HREF="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</A> protein
     identifiers, and with <A HREF="http://www.uniprot.org/">UniProt</A>
@@ -79,14 +79,14 @@ description : |
     from EuropePMC that link open access articles to UniProt or RefSeq
     identifiers.  (This yields some additional links because EuropePMC
     uses different heuristics for their text mining than we do.)
-    
+
     <P>For every article that mentions a locus tag, a RefSeq protein
     identifier, or a UniProt accession, we try to select one or two
     snippets of text that refer to the protein. If we cannot get access to
     the full text, we try to select a snippet from the abstract, but
     unfortunately, unique identifiers such as locus tags are rarely
     provided in abstracts.
-    
+
     <P>We also use manually-curated links between protein sequences and
     articles: <UL> <LI>We index proteins from NCBI's RefSeq if a GeneRIF
     entries links the gene to an article in <A
@@ -101,21 +101,21 @@ description : |
     description of the protein's function.  Most of these entries also
     link to articles in <A
     HREF="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed</A>.
-    
+
     <P>For more information see the <A HREF="http://biorxiv.org/content/early/2017/05/02/133041">preprint</A> or the
     <A
     HREF="https://github.com/morgannprice/PaperBLAST">code</A>.
-    
+
     <H3><A NAME="secret">Secrets</A></H3>
-    
+
     <P>PaperBLAST cannot provide snippets for many of the papers that are
     published in non-open-access journals. This limitation applies even if
     the paper is marked as "free" on the publisher's web site and is
     available in PubmedCentral or EuropePMC. If a journal that you publish
     in is marked as "secret," please consider publishing elsewhere.
-    
+
     <H3><A NAME="omission">Omissions from the PaperBLAST Database</A></H3>
-    
+
     <P>Some important articles are missing from PaperBLAST, either because
     the article's full text is not in EuropePMC (as for many older
     articles) or because of PaperBLAST's heuristics. If you notice an
@@ -130,8 +130,14 @@ description : |
     entry to GeneRIF, you will need an NCBI Gene identifier, but
     unfortunately many prokaryotic proteins in RefSeq do not have
     corresponding Gene identifers.
-    
+
     <center>by <A HREF="http://morgannprice.org/">Morgan Price</A>,
     <A HREF="http://genomics.lbl.gov/">Arkin group</A><BR>
     Lawrence Berkeley National Laboratory
     </center>
+
+publications :
+    -
+        display-text: |
+            Price MN, Arkin AP. PaperBLAST: Text Mining Papers for Information about Homologs. mSystems. 2017;2: e00039-17. doi:10.1128/mSystems.00039-17
+        link: https://msystems.asm.org/content/2/4/e00039-17
