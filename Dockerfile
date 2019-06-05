@@ -20,7 +20,7 @@ RUN git clone -b kbase https://github.com/jmchandonia/PaperBLAST && \
     git reset --hard 1a72ecc63eac9e4fdab2c6b0d289141c23a3f5a8
 RUN mkdir PaperBLAST/bin/blast/
 RUN mkdir PaperBLAST/tmp/
-RUN curl -L ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy/2.2.26/blast-2.2.26-x64-linux.tar.gz -o blast-2.2.26-x64-linux.tar.gz && \
+RUN curl -L ftp://ftp.ncbi.nlm.nih.gov/blast/executables/legacy.NOTSUPPORTED/2.2.26/blast-2.2.26-x64-linux.tar.gz -o blast-2.2.26-x64-linux.tar.gz && \
     tar xzvf blast-2.2.26-x64-linux.tar.gz && \
     mv blast-2.2.26/bin/* PaperBLAST/bin/blast/
 RUN rm -rf blast-2.2.26 blast-2.2.26-x64-linux.tar.gz
