@@ -65,12 +65,12 @@ description : |
     <h3>”Secrets”</h3>
     <p>PaperBLAST cannot provide snippets for many of the papers that are published in non-open-access journals. This limitation applies even if the paper is marked as "free" on the publisher's website and is available in PubmedCentral or EuropePMC. If a journal that you publish in is marked as "secret," please consider publishing elsewhere.</p>
 
-    <h3><a name="omission">Omissions from the PaperBLAST Database</a</h3>
+    <h3>Omissions from the PaperBLAST Database</h3>
     <p>Some important articles are missing from PaperBLAST, either because the article's full text is not in EuropePMC (as for many older articles) or because of PaperBLAST's heuristics. If you notice an article that characterizes a protein's function but is missing from PaperBLAST, please notify the curators at <a href="http://www.uniprot.org/update">UniProt</a> or add an entry to <a href="https://www.ncbi.nlm.nih.gov/gene/submit-generif">GeneRIF</a>. Entries in either of these databases will eventually be incorporated into PaperBLAST. Note that to add an entry to UniProt, you will need to find the UniProt identifier for the protein. If the protein is not already in UniProt, you can ask them to create an entry. To add an entry to GeneRIF, you will need an NCBI Gene identifier, but unfortunately, many prokaryotic proteins in RefSeq do not have corresponding Gene identifiers.</p>
 
     <p>PaperBLAST was developed by <a href="http://morgannprice.org/">Morgan Price</a>, from the <a href="http://genomics.lbl.gov/">Arkin group</a> at Lawrence Berkeley National Laboratory.</p>
 
-    <p><strong>Team members who deployed this App in KBase</strong>: John-Marc Chandonia.  For questions, please <a href="http://kbase.us/contact-us/">contact us</a>.</p>
+    <p><strong>Team members who deployed this App in KBase</strong>: John-Marc Chandonia. For questions, please <a href="http://kbase.us/contact-us/">contact us</a>.</p>
 
 publications :
     -
