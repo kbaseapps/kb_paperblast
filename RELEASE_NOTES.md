@@ -1,5 +1,9 @@
 ### Version 0.0.4
 __Changes__
+- improved documentation
+
+### Version 0.0.4
+__Changes__
 - added citation in PLOS format
 
 ### Version 0.0.3
