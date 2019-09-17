@@ -1,3 +1,7 @@
+### Version 0.0.5
+__Changes__
+- updated to use sdkbase2 in Dockerfile
+
 ### Version 0.0.4
 __Changes__
 - added citation in PLOS format
