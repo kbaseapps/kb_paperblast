@@ -44,7 +44,7 @@ eval {
 
     my $params = {
 	'ws' => get_ws_name(),
-	'sequence' => "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	'sequence' => "MAQFEHGDISIEVDEDGFMAEPDQWTEEIAAALATTEGVEAMTEDHWKVV"
     };
 
     my $rv = $impl->paperblast_seq($params);
