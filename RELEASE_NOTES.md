@@ -1,3 +1,7 @@
+### Version 0.0.6
+__Changes__
+- updated Dockerfile to use sdkbase2
+
 ### Version 0.0.5
 __Changes__
 - improved documentation
