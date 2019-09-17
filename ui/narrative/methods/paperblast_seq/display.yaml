@@ -1,10 +1,10 @@
 #
 # define display information
 #
-name: PaperBLAST sequence - v2017-04-10
+name: Run PaperBLAST on a Protein Sequence
 
 tooltip: |
-    Find papers related to a protein sequence with PaperBLAST
+    Find papers related to a protein sequence with PaperBLAST.
 
 screenshots: []
 
@@ -31,110 +31,46 @@ suggestions:
 parameters :
     sequence :
         ui-name : |
-            Protein sequence
+            Protein Sequence
         short-hint : |
-            Protein sequence to use as input to PaperBLAST (without any headers)
-        long-hint  : |
-            Protein sequence to use as input to PaperBLAST.  Do not include FASTA or other headers.  Non-amino acid characters will be ignored.
+            The protein sequence to use as input for PaperBLAST. Do not include FASTA or other headers. Non-amino acid characters will be ignored.
 
 description : |
-    <p>This is a Narrative method for running <a href="http://papers.genomics.lbl.gov/">PaperBLAST</a>.
+    <p>This is the KBase wrapper for running <a href="http://papers.genomics.lbl.gov/">PaperBLAST</a>.</p>
 
-    <p>PaperBLAST is software that finds open access publications that may be relative to a gene of interest, based on sequence similarity between between your gene of interest and a gene described in the publication.</p>
+    <p>PaperBLAST is software that finds open access publications related to a gene of interest, based on protein sequence similarity between your gene of interest and a gene described in the publication.</p>
 
-    <H3><A NAME="stats">Statistics</A></H3>
+    <h3>Statistics</h3>
+    <p>The PaperBLAST database links 401,049 different protein sequences to 723,768 scientific articles. The searches against EuropePMC were last performed on March 26, 2017.</p>
 
-    The PaperBLAST database links 401,049 different protein sequences to 723,768 scientific articles. Searches against EuropePMC were last performed on March 26 2017.
+    <h3>How It Works</h3>
+    <p>PaperBLAST builds a database of protein sequences that are linked to scientific articles. These links come from automated text searches against the articles in <a href="http://europepmc.org/">EuropePMC</a> and from manually-curated information from <a href="https://www.ncbi.nlm.nih.gov/gene/about-generif" title="Gene Reference into Function (NCBI)">GeneRIF</a>, <a href="http://www.uniprot.org/">Swiss-Prot</a>, and <a href="http://ecocyc.org">EcoCyc</a>. As of March 2017, PaperBLAST links over 360,000 different protein sequences to over 700,000 articles. Given this database and a protein sequence query, PaperBLAST uses <a href="https://en.wikipedia.org/wiki/BLAST">protein-protein BLAST</a> to find similar sequences with E &lt; 0.001.</p>
 
-    <H3><A NAME="works">How It Works</A></H3>
+    <p>To build the database, we query EuropePMC with locus tags, with <a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a>protein identifiers, and with <a href="http://www.uniprot.org/">UniProt</a> accessions. We obtain the locus tags from RefSeq or from <a href="http://www.microbesonline.org/">MicrobesOnline</a>. We use queries of the form "locus_tag AND genus_name" to try to ensure that the paper is actually discussing that gene. Because EuropePMC indexes most recent biomedical papers, even if they are not open access, some of the links may be to papers that you cannot read or that our computers cannot read. We query each of these identifiers that appears in the open access part of EuropePMC, as well as every locus tag that appears in the 500 most-referenced genomes, so that a gene may appear in the PaperBLAST results even though none of the papers that mention it are open access. We also incorporate text-mined links from EuropePMC that link open access articles to UniProt or RefSeq identifiers. This yields some additional links because EuropePMC uses different heuristics for their text mining than we do.</p>
 
-    <P>PaperBLAST builds a database of protein sequences that are linked
-    to scientific articles. These links come from automated text searches
-    against the articles in <A HREF="http://europepmc.org/">EuropePMC</A>
-    and from manually-curated information from <A
-    HREF="https://www.ncbi.nlm.nih.gov/gene/about-generif" title="Gene
-    Reference into Function (NCBI)">GeneRIF</A>, <A
-    HREF="http://www.uniprot.org/">Swiss-Prot</A>, and <A
-    HREF="http://ecocyc.org">EcoCyc</A>.  As of March 2017, PaperBLAST
-    links over 360,000 different protein sequences to over 700,000
-    articles.  Given this database and a protein sequence query,
-    PaperBLAST uses <A
-    HREF="https://en.wikipedia.org/wiki/BLAST">protein-protein BLAST</A>
-    to find similar sequences with E &lt; 0.001.
+    <p>For every article that mentions a locus tag, a RefSeq protein identifier, or a UniProt accession, we try to select one or two snippets of text that refer to the protein. If we cannot get access to the full text, we try to select a snippet from the abstract, but unfortunately, unique identifiers such as locus tags are rarely provided in abstracts.</p>
 
-    <P>To build the database, we query EuropePMC with locus tags, with <A
-    HREF="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</A> protein
-    identifiers, and with <A HREF="http://www.uniprot.org/">UniProt</A>
-    accessions.  We obtain the locus tags from RefSeq or from <A
-    HREF="http://www.microbesonline.org/">MicrobesOnline</A>.  We use
-    queries of the form "locus_tag AND genus_name" to try to ensure that
-    the paper is actually discussing that gene.  Because EuropePMC indexes
-    most recent biomedical papers, even if they are not open access, some
-    of the links may be to papers that you cannot read or that our
-    computers cannot read.  We query each of these identifiers that
-    appears in the open access part of EuropePMC, as well as every locus
-    tag that appears in the 500 most-referenced genomes, so that a gene
-    may appear in the PaperBLAST results even though none of the papers
-    that mention it are open access. We also incorporate text mined links
-    from EuropePMC that link open access articles to UniProt or RefSeq
-    identifiers.  (This yields some additional links because EuropePMC
-    uses different heuristics for their text mining than we do.)
+    <p>We also use manually-curated links between protein sequences and articles:
+    <ul>
+      <li>We index proteins from NCBI's RefSeq if a GeneRIF entry links the gene to an article in <a href="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed</a><sup>&reg;</sup>. GeneRIF also provides a short summary of the article's claim about the protein, which we provide instead of a snippet.</li>
+      <li>We index proteins from Swiss-Prot (the curated part of UniProt) if the curators identified experimental evidence for the protein's function (evidence code ECO:0000269).</li>
+      <li>We index every protein EcoCyc, a curated database of the proteins in <i>Escherichia coli</i> K-12.</li>
+    </ul>
+    </p>
 
-    <P>For every article that mentions a locus tag, a RefSeq protein
-    identifier, or a UniProt accession, we try to select one or two
-    snippets of text that refer to the protein. If we cannot get access to
-    the full text, we try to select a snippet from the abstract, but
-    unfortunately, unique identifiers such as locus tags are rarely
-    provided in abstracts.
+    <p>For the entries from Swiss-Prot and EcoCyc, we provide a short curated description of the protein's function. Most of these entries also link to articles in <a href="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed</a>.</p>
 
-    <P>We also use manually-curated links between protein sequences and
-    articles: <UL> <LI>We index proteins from NCBI's RefSeq if a GeneRIF
-    entries links the gene to an article in <A
-    HREF="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed</A><sup>&reg;</sup>.
-    GeneRIF also provides a short summary of the article's claim about the
-    protein, which we provide instead of a snippet.  <LI>We index proteins
-    from Swiss-Prot (the curated part of UniProt) if the curators
-    identified experimental evidence for the protein's function (evidence
-    code ECO:0000269).  <LI>We index every protein EcoCyc, a curated
-    database of the proteins in <i> Escherichia coli</i> K-12.  </UL> For
-    the entries from Swiss-Prot and EcoCyc, we provide a short curated
-    description of the protein's function.  Most of these entries also
-    link to articles in <A
-    HREF="http://www.ncbi.nlm.nih.gov/pubmed/">PubMed</A>.
+    <p>For more information see the <a href="https://msystems.asm.org/content/2/4/e00039-17">PaperBLAST paper</A> (mSystems 2017) or the <a href="https://github.com/morgannprice/PaperBLAST">code</a>.
 
-    <P>For more information see the <A HREF="http://biorxiv.org/content/early/2017/05/02/133041">preprint</A> or the
-    <A
-    HREF="https://github.com/morgannprice/PaperBLAST">code</A>.
+    <h3>”Secrets”</h3>
+    <p>PaperBLAST cannot provide snippets for many of the papers that are published in non-open-access journals. This limitation applies even if the paper is marked as "free" on the publisher's website and is available in PubmedCentral or EuropePMC. If a journal that you publish in is marked as "secret," please consider publishing elsewhere.</p>
 
-    <H3><A NAME="secret">Secrets</A></H3>
+    <h3>Omissions from the PaperBLAST Database</h3>
+    <p>Some important articles are missing from PaperBLAST, either because the article's full text is not in EuropePMC (as for many older articles) or because of PaperBLAST's heuristics. If you notice an article that characterizes a protein's function but is missing from PaperBLAST, please notify the curators at <a href="http://www.uniprot.org/update">UniProt</a> or add an entry to <a href="https://www.ncbi.nlm.nih.gov/gene/submit-generif">GeneRIF</a>. Entries in either of these databases will eventually be incorporated into PaperBLAST. Note that to add an entry to UniProt, you will need to find the UniProt identifier for the protein. If the protein is not already in UniProt, you can ask them to create an entry. To add an entry to GeneRIF, you will need an NCBI Gene identifier, but unfortunately, many prokaryotic proteins in RefSeq do not have corresponding Gene identifiers.</p>
 
-    <P>PaperBLAST cannot provide snippets for many of the papers that are
-    published in non-open-access journals. This limitation applies even if
-    the paper is marked as "free" on the publisher's web site and is
-    available in PubmedCentral or EuropePMC. If a journal that you publish
-    in is marked as "secret," please consider publishing elsewhere.
+    <p>PaperBLAST was developed by <a href="http://morgannprice.org/">Morgan Price</a>, from the <a href="http://genomics.lbl.gov/">Arkin group</a> at Lawrence Berkeley National Laboratory.</p>
 
-    <H3><A NAME="omission">Omissions from the PaperBLAST Database</A></H3>
-
-    <P>Some important articles are missing from PaperBLAST, either because
-    the article's full text is not in EuropePMC (as for many older
-    articles) or because of PaperBLAST's heuristics. If you notice an
-    article that characterizes a protein's function but is missing from
-    PaperBLAST, please notify the curators at <A
-    HREF="http://www.uniprot.org/update">UniProt</A> or add an entry to <A
-    HREF="https://www.ncbi.nlm.nih.gov/gene/submit-generif">GeneRIF</A>.
-    Entries in either of these databases will eventually be incorporated
-    into PaperBLAST.  Note that to add an entry to UniProt, you will need
-    find the UniProt identifier for the protein.  If the protein is not
-    already in UniProt, you can ask them to create an entry.  To add an
-    entry to GeneRIF, you will need an NCBI Gene identifier, but
-    unfortunately many prokaryotic proteins in RefSeq do not have
-    corresponding Gene identifers.
-
-    <center>by <A HREF="http://morgannprice.org/">Morgan Price</A>,
-    <A HREF="http://genomics.lbl.gov/">Arkin group</A><BR>
-    Lawrence Berkeley National Laboratory
-    </center>
+    <p><strong>Team members who deployed this App in KBase</strong>: John-Marc Chandonia. For questions, please <a href="http://kbase.us/contact-us/">contact us</a>.</p>
 
 publications :
     -
